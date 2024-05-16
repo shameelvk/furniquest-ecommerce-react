@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink,Link } from 'react-router-dom';
 import cartIcon from '../../assets/cart_icon.png';
 import './Navbar.css';
 import { useCartCount } from '../../contexts/CartCountContext';
 
 const Navbar = () => {
-   
-   const {cartCount,updateCartCount}=useCartCount();
-   
+    const [searchText, setSearchText] = useState("")
+    const { cartCount, updateCartCount } = useCartCount();
+
 
     useEffect(() => {
         const getTotalCartItem = async () => {
@@ -26,14 +26,14 @@ const Navbar = () => {
                 const cartData = await response.json();
                 const totalCartItem = cartData.total_unique_items;
                 updateCartCount(totalCartItem)
-               
+
             } catch (error) {
                 console.error('Error fetching cart data:', error);
             }
         };
 
         getTotalCartItem();
-    }, []); 
+    }, []);
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light p-2">
             <div className="container-fluid">
@@ -53,20 +53,19 @@ const Navbar = () => {
                             <NavLink to={'/About-us'} className="nav-link">About Us</NavLink>
                         </li>
                     </ul>
-                    {/* <form className="d-flex mx-auto my-2 my-lg-0 nav-search">
-    <input 
-        className="form-control me-2 search-input" 
-        type="search" 
-        placeholder="Search" 
-        aria-label="Search" 
-        onChange={($e) => {
-            setSearchText($e.target.value);
-        }} 
-    />
-    <button className="btn btn-outline-success search-button" type="button">
-        Click
-       </button>
-</form> */}
+                    <form className="d-flex mx-auto my-2 my-lg-0 nav-search">
+                        <input
+                            className="form-control me-2 search-input"
+                            type="search"
+                            placeholder="Search Products"
+                            aria-label="Search"
+                            onChange={($e) => {
+                                setSearchText($e.target.value);
+                            }}
+                        />
+                        <Link to={'/products?search='+searchText} className="btn  search-button">Search</Link>
+                        
+                    </form>
 
                     <ul className="navbar-nav">
                         <li className="nav-item">

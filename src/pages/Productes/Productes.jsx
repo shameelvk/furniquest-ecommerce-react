@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {useSearchParams} from 'react-router-dom'
 import { useEffect,useState,useContext } from 'react';
 import ProductNavigation from '../../components/ProductNavigation/ProductNavigation'
 import Card from '../../components/Card/Card';
@@ -7,8 +7,11 @@ import { ShopContext } from '../../contexts/ShopContext';
 function Productes() {
 
     const {productData} = useContext(ShopContext)
+    const [searchParams]=useSearchParams();
+    var searchValue=searchParams.get("search");
 
-    
+console.log(productData);
+    const filteredProducts = productData.filter((p) => p.name.toLowerCase().includes(searchValue?searchValue.toLowerCase():""));
 
   return (
     <>
@@ -21,7 +24,7 @@ function Productes() {
     </div>
     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
     {
-            productData.map((p)=>{
+            filteredProducts.map((p)=>{
                 return  <div className="col" key={p.id}>
                 <Card pdData={p}/>
               </div>
