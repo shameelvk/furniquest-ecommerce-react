@@ -1,38 +1,14 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import { useEffect,useState } from 'react';
+import { useEffect,useState,useContext } from 'react';
 import ProductNavigation from '../../components/ProductNavigation/ProductNavigation'
 import Card from '../../components/Card/Card';
+import { ShopContext } from '../../contexts/ShopContext';
 function Productes() {
 
-    const [products, setProducts] = useState([]);
+    const {productData} = useContext(ShopContext)
 
-    useEffect(() => {
-        const fetchData = () => {
-          fetch('https://api.chec.io/v1/products', {
-            method: 'GET',
-            headers: {
-              'X-Authorization': 'pk_57101018f996db1becda1d7cc34d0083a0472b64307a6' 
-            }
-          })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Failed to fetch products');
-            }
-            return response.json();
-          })
-          .then(data => {
-            setProducts(data.data); // Assuming the products are under the 'data' key in the response
-          })
-          .catch(error => {
-            console.error('Error fetching products:', error);
-          });
-        };
     
-        fetchData();
-      }, []);
-      console.log(products);
-
 
   return (
     <>
@@ -45,8 +21,8 @@ function Productes() {
     </div>
     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
     {
-            products.map((p)=>{
-                return  <div className="col">
+            productData.map((p)=>{
+                return  <div className="col" key={p.id}>
                 <Card pdData={p}/>
               </div>
             })

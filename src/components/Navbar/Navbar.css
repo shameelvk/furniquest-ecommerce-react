@@ -1,0 +1,30 @@
+.cart-count {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 10px;
+    font-size: 10px;
+    background: red;
+    color: white;
+}
+
+.cart-nav {
+    position: relative;
+
+}
+
+.search-input {
+    border-radius: 20px; /* Rounded corners */
+    border-color: #ced4da; /* Border color */
+}
+
+.search-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-color: #ced4da; /* Match the border color with the input */
+}

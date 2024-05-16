@@ -1,39 +1,41 @@
 import React from 'react'
 import ProductNavigation from '../../components/ProductNavigation/ProductNavigation'
 import {useParams}from 'react-router-dom'
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useContext} from 'react';
 import Card from '../../components/Card/Card';
+import { ShopContext } from '../../contexts/ShopContext';
 function Category() {
 
     const [products, setProducts] = useState([]);
     const {catId}=useParams();
-     const [displayName, setDisplayName] = useState("")
+     const {productData} = useContext(ShopContext)
 
-    useEffect(() => {
-        const fetchData = () => {
-          fetch('https://api.chec.io/v1/products?limit=26', {
-            method: 'GET',
-            headers: {
-              'X-Authorization': 'pk_57101018f996db1becda1d7cc34d0083a0472b64307a6' 
-            }
-          })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Failed to fetch products');
-            }
-            return response.json();
-          })
-          .then(data => {
-            setProducts(data.data);
-          })
-          .catch(error => {
-            console.error('Error fetching products:', error);
-          });
-        };
+
+    // useEffect(() => {
+    //     const fetchData = () => {
+    //       fetch('https://api.chec.io/v1/products?limit=26', {
+    //         method: 'GET',
+    //         headers: {
+    //           'X-Authorization': 'pk_57101018f996db1becda1d7cc34d0083a0472b64307a6' 
+    //         }
+    //       })
+    //       .then(response => {
+    //         if (!response.ok) {
+    //           throw new Error('Failed to fetch products');
+    //         }
+    //         return response.json();
+    //       })
+    //       .then(data => {
+    //         setProducts(data.data);
+    //       })
+    //       .catch(error => {
+    //         console.error('Error fetching products:', error);
+    //       });
+    //     };
     
-        fetchData();
-      }, []);
-     var filteredProduct=products.filter((p)=>{
+    //     fetchData();
+    //   }, []);
+     var filteredProduct=productData.filter((p)=>{
         
         if(p.categories[0].id==catId){
             return p;

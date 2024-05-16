@@ -1,35 +1,11 @@
 import React from 'react'
-import { useEffect,useState } from 'react';
+import { useEffect,useState,useContext } from 'react';
 import Card from '../Card/Card';
+import { ShopContext } from '../../contexts/ShopContext';
 
 function BestSeller() {
-    const [products, setProducts] = useState([]);
+  const {productData} = useContext(ShopContext)
 
-    useEffect(() => {
-        const fetchData = () => {
-          fetch('https://api.chec.io/v1/products?limit=9', {
-            method: 'GET',
-            headers: {
-              'X-Authorization': 'pk_57101018f996db1becda1d7cc34d0083a0472b64307a6' 
-            }
-          })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Failed to fetch products');
-            }
-            return response.json();
-          })
-          .then(data => {
-            setProducts(data.data); // Assuming the products are under the 'data' key in the response
-          })
-          .catch(error => {
-            console.error('Error fetching products:', error);
-          });
-        };
-    
-        fetchData();
-      }, []);
-      console.log(products);
   return (
     <div className="container">
       <div className="row mb-3">
@@ -38,14 +14,15 @@ function BestSeller() {
         </div>
       </div>
       <div className="row g-2">
-        {
-            products.map((p)=>{
-                return  <div className="col-md-4">
-                <Card pdData={p}/>
-              </div>
-            })
-        }
-       
+      {
+  productData.slice(0, 9).map((p, index) => {
+      return (
+        <div className="col-md-4" key={index}>
+          <Card pdData={p} />
+        </div>
+      );
+    })
+}
         
       </div>
     </div>

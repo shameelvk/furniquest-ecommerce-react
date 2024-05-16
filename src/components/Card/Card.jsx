@@ -3,8 +3,7 @@ import './Card.css'
 import {Link} from 'react-router-dom'
 
 function Card({pdData}) {
-    console.log(pdData);
-    
+   
   return (
     <div className="card pd-card">
       <img src={pdData.image.url} className="card-img-top pd-image p-2" alt={""} />
